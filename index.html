@@ -4,33 +4,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VR Emotional Well-being Quiz</title>
+  <title>VR Emotional Well-being Journey</title>
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
-  <!-- Header Section -->
+  <section class="background">
+    <video loop muted autoplay src="background-video.mp4"></video>
+    <div class="overlay"></div> </section>
+
   <header>
-    <h1>VR Emotional Well-being Quiz</h1>
+    <h1>
+      <span class="vr">VR</span>
+      <span class="emotional">Emotional</span>
+      <span class="wellbeing">Well-being</span>
+      <span class="journey">Journey</span>
+    </h1>
   </header>
 
-  <!-- Main Quiz Area -->
   <main>
-    <!-- Intro Section -->
     <div id="intro-section">
       <p>
-        Welcome to the VR Emotional & Mental Well-being Quiz! 🧠✨
+        Welcome to your VR Emotional & Mental Well-being Journey! ✨
         <br />
-        Virtual Reality (VR) offers new, innovative ways for school guidance counselors to foster emotional healing, stress reduction,
-        and mental clarity beyond traditional sessions.
-        <br />
-        Are you ready to explore how VR could positively impact your mental well-being and emotional support strategies? Let’s find out!
+        Virtual Reality (VR) offers innovative ways for school guidance counselors to promote emotional healing, stress reduction, and mental clarity.  Let's explore how VR can positively impact your emotional well-being and discover support strategies tailored for you.
       </p>
     </div>
-    <button style="background: blue; color: black; border: none; border-radius: 20px; font-size: 18px; cursor: pointer;"><a href="quiz.html" style="text-decoration: none; color: green; "> Start Quiz!</a></button>
 
+    <button class="start-quiz-button">
+      <a href="quiz.html" style="text-decoration: none;">Start Your Journey!</a>
+    </button>
   </main>
-<script src="pogi.js"></script>
+
+  <script src="pogi.js"></script>
 </body>
+
 </html>
