@@ -27,6 +27,7 @@
       display: flex;
       flex: 1;
       height: 100%;
+      transition: margin-left 0.3s ease;
     }
 
     /* Sidebar */
@@ -38,6 +39,13 @@
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
       display: flex;
       flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      z-index: 10;
+      transform: translateX(0);
+      transition: transform 0.3s ease;
     }
 
     .sidebar h2 {
@@ -54,7 +62,7 @@
     }
 
     .sidebar ul li {
-      margin: 25px 0;
+      margin: 15px 0;
     }
 
     .sidebar ul li a {
@@ -77,6 +85,8 @@
       background: #121212;
       box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
       overflow-y: auto;
+      margin-left: 250px;
+      transition: margin-left 0.3s ease;
     }
 
     header h1 {
@@ -149,19 +159,6 @@
       transform: translateY(2px);
     }
 
-    /* Progress Section */
-    section {
-      margin-bottom: 50px;
-    }
-
-    canvas {
-      width: 100%;
-      max-width: 600px;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
     /* Background Video */
     .background {
       position: absolute;
@@ -188,25 +185,49 @@
       background: rgba(0, 0, 0, 0.5);
     }
 
-    /* Futuristic Hover Effects */
-    .sidebar ul li a {
-      position: relative;
-      overflow: hidden;
+    /* Hamburger Icon for Mobile */
+    .hamburger {
+      display: none;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      cursor: pointer;
+      z-index: 15;
     }
 
-    .sidebar ul li a::before {
-      content: '';
-      position: absolute;
-      width: 300%;
-      height: 100%;
-      top: 0;
-      left: -150%;
-      background: #00e5ff;
+    .hamburger div {
+      width: 30px;
+      height: 5px;
+      background-color: white;
+      margin: 6px 0;
       transition: 0.4s;
     }
 
-    .sidebar ul li a:hover::before {
-      left: 100%;
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .dashboard {
+        margin-left: 0;
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
     }
 
     /* Scroll Bar Customization */
@@ -222,25 +243,24 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #ff4081;
     }
-
   </style>
 </head>
 
 <body>
-  <div class="dashboard">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <h2>VR Emotional Well-being</h2>
-      <ul>
-        <li><a href="#intro-section">Home</a></li>
-        <li><a href="#quiz-section">Start Quiz</a></li>
-        <li><a href="#progress-section">Your Progress</a></li>
-        <li><a href="#emotional-stats">Emotional Stats</a></li>
-      </ul>
-    </aside>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>VR Emotional Well-being</h2>
+    <ul>
+      <li><a href="#intro-section">Home</a></li>
+      <li><a href="#quiz-section">Start Quiz</a></li>
+      <li><a href="#progress-section">Your Progress</a></li>
+      <li><a href="#emotional-stats">Emotional Stats</a></li>
+    </ul>
+  </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
+  <!-- Main Content -->
+  <div class="dashboard">
+    <div class="main-content">
       <!-- Background Section -->
       <section class="background">
         <video loop muted autoplay src="background-video.mp4"></video>
@@ -281,10 +301,25 @@
         <canvas id="emotion-stats-chart" width="400" height="200"></canvas>
         <p>Track the emotional changes and improvements through your VR journey.</p>
       </section>
-    </main>
+    </div>
+  </div>
+
+  <!-- Hamburger Icon -->
+  <div class="hamburger" onclick="toggleSidebar()">
+    <div></div>
+    <div></div>
+    <div></div>
   </div>
 
   <script>
+    // Toggle sidebar visibility
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      const dashboard = document.querySelector('.dashboard');
+      sidebar.classList.toggle('active');
+      dashboard.classList.toggle('active');
+    }
+
     // Progress chart
     const ctxProgress = document.getElementById('progress-chart').getContext('2d');
     const progressChart = new Chart(ctxProgress, {
