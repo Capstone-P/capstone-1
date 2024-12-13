@@ -4,40 +4,238 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VR Emotional Well-being Journey</title>
-  <link rel="stylesheet" href="style.css">
+  <title>VR Emotional Well-being Journey Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* General layout for the dashboard */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .dashboard {
+      display: flex;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 20px 0;
+    }
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .sidebar ul li a:hover {
+      text-decoration: underline;
+    }
+
+    .main-content {
+      flex-grow: 1;
+      padding: 20px;
+    }
+
+    h1,
+    h2 {
+      color: #2c3e50;
+    }
+
+    button.start-quiz-button {
+      background-color: #1abc9c;
+      padding: 10px 20px;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 5px;
+      color: white;
+    }
+
+    button.start-quiz-button a {
+      color: white;
+      text-decoration: none;
+    }
+
+    button.start-quiz-button:hover {
+      background-color: #16a085;
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    /* Style for the charts */
+    canvas {
+      margin-top: 20px;
+      max-width: 100%;
+    }
+
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .background video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    header h1 {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    header h1 span {
+      display: inline-block;
+      font-size: 2em;
+      padding: 0 10px;
+      color: #fff;
+    }
+
+    header h1 .vr {
+      color: #f39c12;
+    }
+
+    header h1 .emotional {
+      color: #e74c3c;
+    }
+
+    header h1 .wellbeing {
+      color: #3498db;
+    }
+
+    header h1 .journey {
+      color: #2ecc71;
+    }
+  </style>
 </head>
 
 <body>
-  <section class="background">
-    <video loop muted autoplay src="background-video.mp4"></video>
-    <div class="overlay"></div> </section>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>Dashboard</h2>
+      <ul>
+        <li><a href="#intro-section">Home</a></li>
+        <li><a href="#quiz-section">Start Quiz</a></li>
+        <li><a href="#progress-section">Your Progress</a></li>
+        <li><a href="#emotional-stats">Emotional Stats</a></li>
+      </ul>
+    </aside>
 
-  <header>
-    <h1>
-      <span class="vr">VR</span>
-      <span class="emotional">Emotional</span>
-      <span class="wellbeing">Well-being</span>
-      <span class="journey">Journey</span>
-    </h1>
-  </header>
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Background Section -->
+      <section class="background">
+        <video loop muted autoplay src="background-video.mp4"></video>
+        <div class="overlay"></div>
+      </section>
 
-  <main>
-    <div id="intro-section">
-      <p>
-        Welcome to your VR Emotional & Mental Well-being Journey! ✨
-        <br />
-        Virtual Reality (VR) offers innovative ways for school guidance counselors to promote emotional healing, stress reduction, and mental clarity.  Let's explore how VR can positively impact your emotional well-being and discover support strategies tailored for you.
-      </p>
-    </div>
+      <header>
+        <h1>
+          <span class="vr">VR</span>
+          <span class="emotional">Emotional</span>
+          <span class="wellbeing">Well-being</span>
+          <span class="journey">Journey</span>
+        </h1>
+      </header>
 
-    <button class="start-quiz-button">
-      <a href="quiz.html" style="text-decoration: none;">Start Your Journey!</a>
-    </button>
-  </main>
+      <section id="intro-section">
+        <h2>Welcome to Your VR Emotional & Mental Well-being Journey!</h2>
+        <p>
+          Virtual Reality (VR) offers innovative ways for school guidance counselors to promote emotional healing, stress reduction, and mental clarity.
+          Let's explore how VR can positively impact your emotional well-being and discover support strategies tailored for you.
+        </p>
+        <button class="start-quiz-button">
+          <a href="quiz.html" style="text-decoration: none;">Start Your Journey!</a>
+        </button>
+      </section>
 
-  <script src="pogi.js"></script>
+      <section id="progress-section">
+        <h2>Your Emotional Well-being Progress</h2>
+        <canvas id="progress-chart" width="400" height="200"></canvas>
+        <p>Track your emotional well-being progress through VR sessions.</p>
+      </section>
+
+      <section id="emotional-stats">
+        <h2>Emotional Stats</h2>
+        <canvas id="emotion-stats-chart" width="400" height="200"></canvas>
+        <p>Track the emotional changes and improvements through your VR journey.</p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Progress chart
+    const ctxProgress = document.getElementById('progress-chart').getContext('2d');
+    const progressChart = new Chart(ctxProgress, {
+      type: 'bar',
+      data: {
+        labels: ['Session 1', 'Session 2', 'Session 3', 'Session 4'],
+        datasets: [{
+          label: 'Emotional Progress (%)',
+          data: [60, 70, 85, 90], // Example data, can be dynamic
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
+
+    // Emotional stats chart
+    const ctxStats = document.getElementById('emotion-stats-chart').getContext('2d');
+    const emotionStatsChart = new Chart(ctxStats, {
+      type: 'pie',
+      data: {
+        labels: ['Happy', 'Sad', 'Stressed', 'Relaxed'],
+        datasets: [{
+          data: [40, 15, 30, 15], // Example data, can be dynamic
+          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+          hoverOffset: 4
+        }]
+      }
+    });
+  </script>
 </body>
 
 </html>
