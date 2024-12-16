@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -252,7 +252,7 @@
     <h2>VR Emotional Well-being</h2>
     <ul>
       <li><a href="#intro-section">Home</a></li>
-      <li><a href="#quiz-section">Start Quiz</a></li>
+      <li><a href="quiz.html">Start Quiz</a></li>
       <li><a href="#progress-section">Your Progress</a></li>
       <li><a href="#emotional-stats">Emotional Stats</a></li>
     </ul>
@@ -284,26 +284,8 @@
           Let's explore how VR can positively impact your emotional well-being and discover support strategies tailored for you.
         </p>
         <button class="start-quiz-button">
-          <a href="#quiz-section">Start Your Journey!</a>
+          <a href="quiz.html">Start Your Journey!</a>
         </button>
-      </section>
-
-      <!-- Quiz Section -->
-      <section id="quiz-section">
-        <h2>VR Emotional Well-being Quiz</h2>
-        <div id="quiz-container">
-          <div id="question-container">
-            <p id="question">Loading...</p>
-            <button class="answer-btn" onclick="answerQuestion('yes')">Yes</button>
-            <button class="answer-btn" onclick="answerQuestion('no')">No</button>
-          </div>
-          <button id="submit-btn" onclick="submitTest()" style="display: none;">Submit Test</button>
-        </div>
-        <canvas id="resultChart" style="max-width: 500px; margin-top: 20px;"></canvas>
-        <div id="feedback-section" style="margin-top: 20px;">
-          <h2>Your Results 🎉</h2>
-          <p id="feedback-text">Discover how VR can empower your mental well-being journey.</p>
-        </div>
       </section>
 
       <!-- Progress Section -->
@@ -369,54 +351,12 @@
       data: {
         labels: ['Happy', 'Sad', 'Stressed', 'Relaxed'],
         datasets: [{
-          data: [40, 20, 10, 30], // Example data, can be dynamic
-          backgroundColor: ['#4caf50', '#ff5722', '#ffeb3b', '#2196f3'],
+          data: [40, 15, 30, 15], // Example data, can be dynamic
+          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+          hoverOffset: 4
         }]
       }
     });
-
-    // Quiz logic
-    let currentQuestionIndex = 0;
-    const questions = [
-      "Do you often feel stressed?",
-      "Do you find it hard to focus?",
-      "Do you feel happy with your daily routine?",
-      "Do you enjoy social interactions?"
-    ];
-    const answers = [];
-
-    function answerQuestion(answer) {
-      answers.push(answer);
-      currentQuestionIndex++;
-      if (currentQuestionIndex < questions.length) {
-        document.getElementById('question').innerText = questions[currentQuestionIndex];
-      } else {
-        document.getElementById('question-container').style.display = 'none';
-        document.getElementById('submit-btn').style.display = 'block';
-      }
-    }
-
-    function submitTest() {
-      const yesCount = answers.filter(ans => ans === 'yes').length;
-      const feedbackText = document.getElementById('feedback-text');
-      if (yesCount >= 3) {
-        feedbackText.innerText = "You may benefit greatly from guided VR sessions focused on stress reduction and mental clarity.";
-      } else {
-        feedbackText.innerText = "You seem to be on a positive track! VR can still enhance your journey further.";
-      }
-
-      const ctxResult = document.getElementById('resultChart').getContext('2d');
-      new Chart(ctxResult, {
-        type: 'doughnut',
-        data: {
-          labels: ['Yes', 'No'],
-          datasets: [{
-            data: [yesCount, questions.length - yesCount],
-            backgroundColor: ['#00e5ff', '#ff4081']
-          }]
-        }
-      });
-    }
   </script>
 </body>
 
